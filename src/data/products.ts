@@ -47,7 +47,14 @@ export const BUSINESS_INFO = {
   whatsappNumber: "919881703098",
   address: "Shop No. 1, Near HP Petrol Pump, Girnare, Dugaon, Maharashtra – 422203",
   locationShort: "Girnare, Dugaon, Nashik - 422203",
-  googleMapsUrl: "https://maps.google.com/?q=Girnare+Dugaon+Maharashtra+422203",
+  coordinates: {
+    lat: 20.0705053,
+    lng: 73.6790837,
+  },
+  coordinatesDisplay: "20.0705053, 73.6790837",
+  googleMapsUrl: "https://www.google.com/maps?q=20.0705053,73.6790837",
+  googleMapsDirectionsUrl: "https://www.google.com/maps/dir/?api=1&destination=20.0705053,73.6790837",
+  mapEmbedUrl: "https://maps.google.com/maps?q=20.0705053,73.6790837&hl=en&z=17&output=embed",
   workingHours: "Monday – Sunday: 7:30 AM – 8:30 PM",
 };
 

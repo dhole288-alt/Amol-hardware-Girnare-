@@ -1,12 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BUSINESS_INFO } from '../data/products';
-import { MapPin, Navigation, Phone, ExternalLink, Clock, Compass, Fuel, CheckCircle } from 'lucide-react';
+import { MapPin, Navigation, Phone, ExternalLink, Clock, Compass, Fuel, CheckCircle, Copy, Check } from 'lucide-react';
 
 interface LocationSectionProps {
   lang: 'mr' | 'en';
 }
 
 export const LocationSection: React.FC<LocationSectionProps> = ({ lang }) => {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopyCoordinates = () => {
+    navigator.clipboard.writeText(BUSINESS_INFO.coordinatesDisplay);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2500);
+  };
+
   return (
     <section id="location" className="py-20 bg-[#080c0f] relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -15,7 +23,7 @@ export const LocationSection: React.FC<LocationSectionProps> = ({ lang }) => {
         <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-orange-950/80 border border-orange-500/40 text-orange-400 text-xs font-extrabold uppercase tracking-wider">
             <Compass className="w-3.5 h-3.5" />
-            <span>{lang === 'mr' ? 'दुकानाचा पत्ता व रस्ता' : 'Store Location & Directions'}</span>
+            <span>{lang === 'mr' ? 'दुकानाचा पत्ता, GPS आणि थेट रस्ता' : 'Store Location & Live Navigation'}</span>
           </div>
 
           <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight font-heading">
@@ -24,8 +32,8 @@ export const LocationSection: React.FC<LocationSectionProps> = ({ lang }) => {
 
           <p className="text-gray-400 text-sm sm:text-base">
             {lang === 'mr'
-              ? 'गिरणारे, दुगाव - HP पेट्रोल पंपाच्या अगदी जवळ, मुख्य रस्त्यावर.'
-              : 'Conveniently situated on the main route in Girnare, next to the HP Petrol Pump.'}
+              ? 'गिरणारे, दुगाव - HP पेट्रोल पंपाच्या अगदी जवळ, मुख्य रस्त्यावर. थेट नेव्हिगेशनसाठी खालील बटणावर क्लिक करा.'
+              : 'Conveniently situated on the main route in Girnare, next to the HP Petrol Pump. Click below for live GPS directions.'}
           </p>
         </div>
 
@@ -34,13 +42,18 @@ export const LocationSection: React.FC<LocationSectionProps> = ({ lang }) => {
           
           {/* Left Info Card */}
           <div className="lg:col-span-5 bg-[#11161b] border border-gray-800 rounded-3xl p-6 sm:p-8 flex flex-col justify-between space-y-6 shadow-xl">
-            <div className="space-y-6">
+            <div className="space-y-5">
               
-              {/* Store Title */}
-              <div className="border-b border-gray-800 pb-5">
-                <span className="text-[11px] uppercase tracking-wider text-orange-400 font-bold">
-                  Official Store Address
-                </span>
+              {/* Store Title & GPS Badge */}
+              <div className="border-b border-gray-800 pb-4">
+                <div className="flex items-center justify-between gap-2">
+                  <span className="text-[11px] uppercase tracking-wider text-orange-400 font-bold">
+                    Official Store Location
+                  </span>
+                  <span className="px-2 py-0.5 rounded-full bg-green-950/90 border border-green-500/40 text-green-400 text-[10px] font-bold">
+                    GPS Verified
+                  </span>
+                </div>
                 <h3 className="text-2xl font-extrabold text-white font-heading mt-1">
                   Amol Hardware
                 </h3>
@@ -68,8 +81,36 @@ export const LocationSection: React.FC<LocationSectionProps> = ({ lang }) => {
                 </div>
               </div>
 
+              {/* GPS Coordinates Display & Copy Button */}
+              <div className="p-3.5 rounded-2xl bg-[#0b0e12] border border-gray-800 flex items-center justify-between gap-3">
+                <div className="space-y-0.5">
+                  <span className="text-[10px] uppercase font-bold text-gray-400">GPS Coordinates (अक्षांश / रेखांश):</span>
+                  <p className="text-xs font-mono font-bold text-orange-300">
+                    {BUSINESS_INFO.coordinatesDisplay}
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={handleCopyCoordinates}
+                  className="px-3 py-1.5 rounded-xl bg-[#182026] hover:bg-[#222c35] border border-gray-700 text-gray-200 text-xs font-bold flex items-center gap-1.5 transition active:scale-95 cursor-pointer"
+                  title="Copy GPS coordinates"
+                >
+                  {copied ? (
+                    <>
+                      <Check className="w-3.5 h-3.5 text-green-400" />
+                      <span className="text-green-400">Copied!</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-3.5 h-3.5 text-orange-400" />
+                      <span>Copy</span>
+                    </>
+                  )}
+                </button>
+              </div>
+
               {/* Working Hours & Service Areas */}
-              <div className="space-y-3 text-xs text-gray-300">
+              <div className="space-y-2.5 text-xs text-gray-300">
                 <div className="flex items-center gap-2.5">
                   <Clock className="w-4 h-4 text-orange-400 shrink-0" />
                   <span><strong>Store Timings:</strong> 7:30 AM – 8:30 PM (All 7 Days)</span>
@@ -83,23 +124,23 @@ export const LocationSection: React.FC<LocationSectionProps> = ({ lang }) => {
             </div>
 
             {/* Action Buttons in Kesari */}
-            <div className="space-y-3 pt-4 border-t border-gray-800">
-              {/* Get Directions Button */}
+            <div className="space-y-3 pt-3 border-t border-gray-800">
+              {/* Live Track Navigation Button */}
               <a
-                href={BUSINESS_INFO.googleMapsUrl}
+                href={BUSINESS_INFO.googleMapsDirectionsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full py-3.5 bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 text-white rounded-xl font-extrabold text-sm flex items-center justify-center gap-2 shadow-lg shadow-orange-950/60 transition"
+                className="w-full py-3.5 bg-gradient-to-r from-orange-600 via-amber-600 to-orange-700 hover:from-orange-500 hover:to-amber-500 text-white rounded-xl font-extrabold text-sm flex items-center justify-center gap-2 shadow-lg shadow-orange-950/60 transition transform active:scale-95"
               >
-                <Navigation className="w-4 h-4" />
-                <span>{lang === 'mr' ? 'Google Maps वर रस्ता पहा' : 'Get Directions'}</span>
+                <Navigation className="w-4 h-4 text-white animate-pulse" />
+                <span>{lang === 'mr' ? '📍 Track Now - थेट रस्ता नेव्हिगेट करा' : '📍 Track Now - Start Live Navigation'}</span>
                 <ExternalLink className="w-3.5 h-3.5" />
               </a>
 
               {/* Direct Call Button */}
               <a
                 href={`tel:${BUSINESS_INFO.phoneRaw}`}
-                className="w-full py-3 bg-[#182026] hover:bg-[#202932] text-orange-400 hover:text-white border border-orange-500/40 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition"
+                className="w-full py-2.5 bg-[#182026] hover:bg-[#202932] text-orange-400 hover:text-white border border-orange-500/40 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition"
               >
                 <Phone className="w-4 h-4" />
                 <span>Call {BUSINESS_INFO.phone}</span>
@@ -108,51 +149,50 @@ export const LocationSection: React.FC<LocationSectionProps> = ({ lang }) => {
 
           </div>
 
-          {/* Right Visual Map Card / Interactive Route Preview */}
+          {/* Right Visual Map Card / Real Embedded Google Map */}
           <div className="lg:col-span-7 bg-[#11161b] border border-gray-800 rounded-3xl overflow-hidden shadow-xl flex flex-col">
             {/* Map Top Header */}
-            <div className="bg-[#182026] px-6 py-3.5 border-b border-gray-800 flex items-center justify-between">
+            <div className="bg-[#182026] px-6 py-3.5 border-b border-gray-800 flex items-center justify-between flex-wrap gap-2">
               <div className="flex items-center gap-2 text-xs font-semibold text-gray-300">
-                <span className="w-2.5 h-2.5 rounded-full bg-orange-500"></span>
-                <span>Girnare - Dugaon Location Map</span>
+                <span className="w-2.5 h-2.5 rounded-full bg-orange-500 animate-ping"></span>
+                <span>Amol Hardware • 20.0705053, 73.6790837</span>
               </div>
-              <span className="text-[11px] text-gray-400">Maharashtra – 422203</span>
+              <a
+                href={BUSINESS_INFO.googleMapsDirectionsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-xs text-orange-400 hover:text-orange-300 font-bold transition"
+              >
+                <Navigation className="w-3.5 h-3.5" />
+                <span>Open in App</span>
+              </a>
             </div>
 
-            {/* Simulated Clean Styled Interactive Map Frame */}
-            <div className="relative flex-1 min-h-[350px] bg-[#0c1014] flex items-center justify-center p-6 text-center">
-              {/* Map Graphic Background */}
-              <div className="absolute inset-0 opacity-40 bg-[radial-gradient(#3a2e22_1px,transparent_1px)] [background-size:16px_16px]" />
-              
-              {/* Visual Map Elements */}
-              <div className="relative z-10 max-w-md space-y-4">
-                <div className="inline-flex p-4 rounded-2xl bg-[#182026] border border-orange-500/50 shadow-2xl animate-bounce">
-                  <MapPin className="w-10 h-10 text-orange-400" />
-                </div>
+            {/* Embedded Live Google Maps Iframe */}
+            <div className="relative flex-1 min-h-[360px] sm:min-h-[400px] w-full bg-[#0c1014]">
+              <iframe
+                title="Amol Hardware Girnare Live Map"
+                src={BUSINESS_INFO.mapEmbedUrl}
+                width="100%"
+                height="100%"
+                className="w-full h-full min-h-[360px] sm:min-h-[400px] border-0 filter brightness-90 contrast-110"
+                loading="lazy"
+                allowFullScreen
+                referrerPolicy="no-referrer-when-downgrade"
+              />
 
-                <div className="space-y-1">
-                  <h4 className="text-lg font-bold text-white font-heading">
-                    AMOL HARDWARE
-                  </h4>
-                  <p className="text-xs text-orange-400 font-bold">
-                    Shop No. 1, Near HP Petrol Pump, Girnare, Dugaon
-                  </p>
-                  <p className="text-xs text-gray-400 max-w-xs mx-auto">
-                    Direct access from the main highway road with ample parking space for loading pipes, drip bundles, and hardware trucks.
-                  </p>
-                </div>
-
-                <div className="pt-2">
-                  <a
-                    href={BUSINESS_INFO.googleMapsUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 text-white font-extrabold text-xs shadow-md transition"
-                  >
-                    <span>Open in Google Maps Application</span>
-                    <ExternalLink className="w-3.5 h-3.5" />
-                  </a>
-                </div>
+              {/* Floating Quick Action Overlay at Bottom of Map */}
+              <div className="absolute bottom-3 left-3 right-3 sm:left-4 sm:right-auto z-10">
+                <a
+                  href={BUSINESS_INFO.googleMapsDirectionsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-4 py-2.5 rounded-xl bg-black/90 hover:bg-black border border-orange-500/80 text-white font-extrabold text-xs shadow-2xl backdrop-blur-md flex items-center gap-2 transition"
+                >
+                  <Navigation className="w-4 h-4 text-orange-400 animate-bounce" />
+                  <span>Start Turn-by-Turn GPS Tracking</span>
+                  <ExternalLink className="w-3 h-3 text-gray-400" />
+                </a>
               </div>
             </div>
 

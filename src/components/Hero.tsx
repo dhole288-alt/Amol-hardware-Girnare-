@@ -120,13 +120,13 @@ export const Hero: React.FC<HeroProps> = ({ lang, onOpenEnquiry }) => {
                 <span>{lang === 'mr' ? 'कॉल करा' : 'Call Now'}</span>
               </a>
 
-              {/* Get Directions */}
+              {/* Track Location Now */}
               <a
                 href="#location"
-                className="px-4 py-3.5 bg-[#10151a]/80 hover:bg-[#182028] text-gray-300 hover:text-orange-400 border border-gray-800 hover:border-orange-500/40 rounded-xl font-bold text-sm sm:text-base flex items-center gap-2 transition"
+                className="px-4 py-3.5 bg-[#10151a]/80 hover:bg-orange-950/50 text-gray-200 hover:text-orange-300 border border-orange-500/30 hover:border-orange-500/60 rounded-xl font-bold text-sm sm:text-base flex items-center gap-2 transition shadow-md"
               >
-                <Navigation className="w-4 h-4 text-orange-400" />
-                <span>{lang === 'mr' ? 'पत्ता पहा' : 'Directions'}</span>
+                <Navigation className="w-4 h-4 text-orange-400 animate-pulse" />
+                <span>{lang === 'mr' ? '📍 Track Now' : '📍 Track Now'}</span>
               </a>
             </div>
 

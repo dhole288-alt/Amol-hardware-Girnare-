@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { BUSINESS_INFO, getWhatsAppLink } from '../data/products';
-import { Phone, MapPin, Send, CheckCircle2, MessageCircle, Clock, Sparkles } from 'lucide-react';
+import { Phone, MapPin, Send, CheckCircle2, MessageCircle, Clock, Sparkles, Navigation, ExternalLink } from 'lucide-react';
 
 interface ContactSectionProps {
   lang: 'mr' | 'en';
@@ -112,14 +112,19 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
             </a>
 
             {/* Address Card */}
-            <div className="p-6 rounded-2xl bg-[#11161b] border border-gray-800 space-y-3 shadow-lg">
+            <div className="p-6 rounded-2xl bg-[#11161b] border border-gray-800 space-y-4 shadow-lg">
               <div className="flex items-start gap-4">
                 <div className="p-3.5 rounded-xl bg-orange-950/80 border border-orange-500/40 text-orange-400 shrink-0">
                   <MapPin className="w-6 h-6" />
                 </div>
-                <div>
-                  <div className="text-xs text-orange-400 font-bold uppercase tracking-wide">
-                    {lang === 'mr' ? 'पत्ता' : 'Shop Location'}
+                <div className="flex-1">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs text-orange-400 font-bold uppercase tracking-wide">
+                      {lang === 'mr' ? 'पत्ता व GPS' : 'Shop Location & GPS'}
+                    </span>
+                    <span className="text-[10px] text-gray-400 font-mono">
+                      {BUSINESS_INFO.coordinatesDisplay}
+                    </span>
                   </div>
                   <div className="text-sm sm:text-base font-bold text-white mt-1 leading-snug">
                     {BUSINESS_INFO.address}
@@ -130,6 +135,18 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
                   </div>
                 </div>
               </div>
+
+              {/* Track Now Button */}
+              <a
+                href={BUSINESS_INFO.googleMapsDirectionsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 text-white font-extrabold text-xs flex items-center justify-center gap-2 shadow-md transition"
+              >
+                <Navigation className="w-4 h-4 text-white animate-pulse" />
+                <span>{lang === 'mr' ? '📍 Track Now - Google Maps वर रस्ता पहा' : '📍 Track Now - Start Navigation'}</span>
+                <ExternalLink className="w-3.5 h-3.5" />
+              </a>
             </div>
 
             {/* Marathi Guidance Promise Card in Kesari */}
