@@ -1,0 +1,6 @@
+{
+  "name": "Amol Hardware",
+  "description": "Premium Hardware & Drip Irrigation solutions in Girnare, Dugaon, Maharashtra. PVC/HDPE pipes, agricultural drip systems, tools, and plumbing materials.",
+  "requestFramePermissions": ["geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

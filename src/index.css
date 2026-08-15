@@ -1,0 +1,78 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    font-family: "Times New Roman", Times, "Liberation Serif", Georgia, serif;
+    font-weight: 700;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6, .font-heading {
+    font-family: "Times New Roman", Times, "Liberation Serif", Georgia, serif;
+    font-weight: 800;
+  }
+
+  p, span, a, button, input, select, textarea, li, label, strong, b, div {
+    font-family: "Times New Roman", Times, "Liberation Serif", Georgia, serif;
+  }
+
+  /* Bold emphasis for English elements */
+  p, li, label, .text-gray-300, .text-gray-400 {
+    font-weight: 600;
+  }
+
+  .font-marathi {
+    font-family: "Tiro Devanagari Marathi", "Times New Roman", Times, serif;
+    font-weight: 700;
+  }
+}
+
+/* Custom glow and glassmorphism helpers in Kesari theme */
+.glass-panel {
+  background: rgba(20, 25, 30, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(249, 115, 22, 0.2);
+}
+
+.glass-panel-hover:hover {
+  border-color: rgba(249, 115, 22, 0.5);
+  box-shadow: 0 10px 30px -10px rgba(249, 115, 22, 0.25);
+}
+
+.bhagwa-glow {
+  box-shadow: 0 0 25px -5px rgba(249, 115, 22, 0.45);
+}
+
+.bhagwa-glow-subtle {
+  box-shadow: 0 0 15px -3px rgba(249, 115, 22, 0.3);
+}
+
+.green-glow {
+  box-shadow: 0 0 25px -5px rgba(249, 115, 22, 0.45);
+}
+
+.green-glow-subtle {
+  box-shadow: 0 0 15px -3px rgba(249, 115, 22, 0.3);
+}
+
+.industrial-grid-pattern {
+  background-image: radial-gradient(rgba(249, 115, 22, 0.1) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #080c0f;
+}
+::-webkit-scrollbar-thumb {
+  background: #252e35;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #ea580c;
+}
