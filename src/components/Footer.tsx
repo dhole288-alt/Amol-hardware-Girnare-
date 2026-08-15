@@ -143,7 +143,7 @@ export const Footer: React.FC<FooterProps> = ({ lang }) => {
           </div>
 
           <div className="text-center">
-            Girnare • Dugaon, Maharashtra – 422203
+            Girnare • Dugaon, Maharashtra – 422003
           </div>
 
           <button

@@ -45,8 +45,8 @@ export const BUSINESS_INFO = {
   phoneRaw: "9881703098",
   phoneDisplay: "+91 98817 03098",
   whatsappNumber: "919881703098",
-  address: "Shop No. 1, Near HP Petrol Pump, Girnare, Dugaon, Maharashtra – 422203",
-  locationShort: "Girnare, Dugaon, Nashik - 422203",
+  address: "Shop No. 1, Near HP Petrol Pump, Girnare, Dugaon, Maharashtra – 422003",
+  locationShort: "Girnare, Dugaon, Nashik - 422003",
   coordinates: {
     lat: 20.0705053,
     lng: 73.6790837,
