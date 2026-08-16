@@ -2,6 +2,7 @@ import React from 'react';
 import { CATEGORIES } from '../data/products';
 import { Category } from '../types';
 import { ArrowRight, Layers } from 'lucide-react';
+import { motion } from 'motion/react';
 
 interface CategoryGridProps {
   lang: 'mr' | 'en';
@@ -10,6 +11,25 @@ interface CategoryGridProps {
 }
 
 export const CategoryGrid: React.FC<CategoryGridProps> = ({ lang, onSelectCategory, onOpenEnquiry }) => {
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.08,
+      },
+    },
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 25 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
+    },
+  };
+
   return (
     <section id="products" className="py-20 bg-[#080c0f] relative">
       {/* Background accents in Kesari */}
@@ -18,7 +38,13 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({ lang, onSelectCatego
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="text-center max-w-3xl mx-auto mb-16 space-y-4"
+        >
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-orange-950/70 border border-orange-500/40 text-orange-400 text-xs font-extrabold uppercase tracking-wider">
             <Layers className="w-3.5 h-3.5" />
             <span>{lang === 'mr' ? 'आमची उत्पादने' : 'Our Products'}</span>
@@ -33,14 +59,22 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({ lang, onSelectCatego
               ? 'शेतीसाठी दर्जेदार ठिबक, तुषार, PVC/HDPE पाईप्स आणि घरासाठी लागणारे सर्व हार्डवेअर व प्लंबिंग साहित्य उपलब्ध.'
               : 'Explore our complete inventory of industrial-grade hardware, irrigation systems, agricultural pipes, valves, and precision tools.'}
           </p>
-        </div>
+        </motion.div>
 
         {/* Categories Grid (8 Cards) */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-40px' }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+        >
           {CATEGORIES.map((cat: Category, index: number) => (
-            <div
+            <motion.div
               key={cat.id}
-              className="group relative bg-[#11161b] border border-gray-800/80 hover:border-orange-500/60 rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl hover:shadow-orange-950/40 transition-all duration-300 flex flex-col transform hover:-translate-y-1.5"
+              variants={cardVariants}
+              whileHover={{ y: -6, transition: { duration: 0.25 } }}
+              className="group relative bg-[#11161b] border border-gray-800/80 hover:border-orange-500/60 rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl hover:shadow-orange-950/40 transition-all duration-300 flex flex-col"
             >
               {/* Product Category Image */}
               <div className="relative h-48 w-full overflow-hidden bg-black/40">
@@ -90,17 +124,19 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({ lang, onSelectCatego
                     <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                   </button>
 
-                  <button
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
                     onClick={() => onOpenEnquiry(`${cat.name} (${cat.marathiName})`)}
                     className="px-2.5 py-1 rounded-lg bg-[#182026] hover:bg-orange-600 text-orange-300 hover:text-white text-[11px] font-bold transition border border-orange-500/30 hover:border-orange-500 cursor-pointer"
                   >
                     {lang === 'mr' ? 'चौकशी' : 'Enquire'}
-                  </button>
+                  </motion.button>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
       </div>
     </section>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { ASSET_IMAGES, BUSINESS_INFO } from '../data/products';
-import { Sprout, Droplets, Phone, ArrowRight, ShieldCheck, Sparkles, CheckCircle2 } from 'lucide-react';
+import { Sprout, Droplets, Phone, ArrowRight, Sparkles, CheckCircle2 } from 'lucide-react';
+import { motion } from 'motion/react';
 
 interface FarmShowcaseProps {
   lang: 'mr' | 'en';
@@ -44,16 +45,42 @@ export const FarmShowcase: React.FC<FarmShowcaseProps> = ({ lang, onOpenEnquiry 
     },
   ];
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.1,
+      },
+    },
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
+    },
+  };
+
   return (
     <section className="py-20 bg-[#06090c] relative overflow-hidden border-t border-b border-orange-500/20">
       {/* Background ambient lighting */}
-      <div className="absolute top-1/4 left-10 w-96 h-96 bg-orange-600/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-10 right-10 w-96 h-96 bg-amber-600/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/4 left-10 w-96 h-96 bg-orange-600/10 rounded-full blur-3xl pointer-events-none animate-ambient-glow" />
+      <div className="absolute bottom-10 right-10 w-96 h-96 bg-amber-600/10 rounded-full blur-3xl pointer-events-none animate-ambient-glow" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header in Kesari */}
-        <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="text-center max-w-3xl mx-auto mb-16 space-y-3"
+        >
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-orange-950/80 border border-orange-500/40 text-orange-400 text-xs font-extrabold uppercase tracking-wider shadow-lg">
             <Sprout className="w-3.5 h-3.5" />
             <span>{lang === 'mr' ? 'आमचे शेतकरी व समृद्ध शेती' : 'Our Farmers & Lush Green Farmlands'}</span>
@@ -76,14 +103,22 @@ export const FarmShowcase: React.FC<FarmShowcaseProps> = ({ lang, onOpenEnquiry 
               ? 'शेतात काबाडकष्ट करणाऱ्या बळीराजाला आणि महिला शेतकऱ्यांना दर्जेदार ठिबक पाईप्स, सिंचन साहित्य व हार्डवेअर पुरवून आम्ही शेती समृद्ध बनवण्यास हातभार लावत आहोत.'
               : 'Dedicated to empowering the hardworking farmers and women farmers across Maharashtra with state-of-the-art drip systems, heavy-duty pipes, and farm hardware.'}
           </p>
-        </div>
+        </motion.div>
 
         {/* 3 Large Visual Story Cards Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-50px' }}
+          className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch"
+        >
           {farmHighlights.map((item) => (
-            <div
+            <motion.div
               key={item.id}
-              className="bg-[#0f1418] border border-gray-800 hover:border-orange-500/60 rounded-3xl overflow-hidden shadow-2xl transition-all duration-300 flex flex-col justify-between group hover:-translate-y-1.5"
+              variants={cardVariants}
+              whileHover={{ y: -6, transition: { duration: 0.25 } }}
+              className="bg-[#0f1418] border border-gray-800 hover:border-orange-500/60 rounded-3xl overflow-hidden shadow-2xl transition-all duration-300 flex flex-col justify-between group hover:shadow-orange-950/40"
             >
               {/* Image Container with high clarity */}
               <div className="relative h-64 sm:h-72 overflow-hidden">
@@ -99,7 +134,7 @@ export const FarmShowcase: React.FC<FarmShowcaseProps> = ({ lang, onOpenEnquiry 
 
                 {/* Top Badge */}
                 <div className="absolute top-4 left-4 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/80 border border-orange-500/40 text-orange-400 text-xs font-bold backdrop-blur-md">
-                  <Sparkles className="w-3 h-3" />
+                  <Sparkles className="w-3.5 h-3.5" />
                   <span>{item.badge}</span>
                 </div>
 
@@ -127,23 +162,31 @@ export const FarmShowcase: React.FC<FarmShowcaseProps> = ({ lang, onOpenEnquiry 
 
                 {/* Card Action Button */}
                 <div className="pt-4 border-t border-gray-800/80 flex items-center justify-between">
-                  <button
+                  <motion.button
+                    whileHover={{ x: 2 }}
+                    whileTap={{ scale: 0.96 }}
                     onClick={() => onOpenEnquiry(item.title)}
                     className="inline-flex items-center gap-2 text-xs font-extrabold text-orange-400 hover:text-orange-300 transition cursor-pointer"
                   >
                     <span>{lang === 'mr' ? 'या साहित्याची माहिती विचारा' : 'Enquire for this Material'}</span>
                     <ArrowRight className="w-3.5 h-3.5" />
-                  </button>
+                  </motion.button>
 
                   <span className="w-2 h-2 rounded-full bg-orange-500"></span>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         {/* Bottom Farmer Support Banner in Kesari */}
-        <div className="mt-12 p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-orange-950/80 via-[#131a20] to-orange-950/80 border border-orange-500/40 shadow-2xl flex flex-col md:flex-row items-center justify-between gap-6">
+        <motion.div
+          initial={{ opacity: 0, y: 25 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-50px' }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="mt-12 p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-orange-950/80 via-[#131a20] to-orange-950/80 border border-orange-500/40 shadow-2xl flex flex-col md:flex-row items-center justify-between gap-6"
+        >
           <div className="flex items-center gap-4">
             <div className="w-14 h-14 rounded-2xl bg-orange-600/30 border border-orange-400/50 text-orange-400 flex items-center justify-center shrink-0 shadow-lg">
               <Droplets className="w-7 h-7 animate-bounce" />
@@ -159,23 +202,27 @@ export const FarmShowcase: React.FC<FarmShowcaseProps> = ({ lang, onOpenEnquiry 
           </div>
 
           <div className="flex flex-wrap items-center gap-3 shrink-0">
-            <button
+            <motion.button
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
               onClick={() => onOpenEnquiry('Farm Irrigation Consultation & Material Quote')}
               className="px-6 py-3 bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 text-white rounded-xl font-extrabold text-xs sm:text-sm shadow-xl shadow-orange-950/60 transition cursor-pointer flex items-center gap-2"
             >
               <CheckCircle2 className="w-4 h-4" />
               <span>{lang === 'mr' ? 'शेतकरी सल्ला अर्ज' : 'Get Free Consultation'}</span>
-            </button>
+            </motion.button>
 
-            <a
+            <motion.a
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
               href={`tel:${BUSINESS_INFO.phoneRaw}`}
               className="px-5 py-3 bg-[#182026] hover:bg-[#222c35] text-orange-300 hover:text-white border border-orange-500/40 rounded-xl font-bold text-xs sm:text-sm flex items-center gap-2 transition"
             >
               <Phone className="w-4 h-4 text-orange-400" />
               <span>{BUSINESS_INFO.phone}</span>
-            </a>
+            </motion.a>
           </div>
-        </div>
+        </motion.div>
 
       </div>
     </section>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { BUSINESS_INFO, getWhatsAppLink } from '../data/products';
 import { Phone, MapPin, Wrench, Droplets, ArrowUp, MessageCircle } from 'lucide-react';
+import { motion } from 'motion/react';
 
 interface FooterProps {
   lang: 'mr' | 'en';
@@ -20,7 +21,13 @@ export const Footer: React.FC<FooterProps> = ({ lang }) => {
       <div className="h-1 w-full bg-gradient-to-r from-orange-600 via-amber-500 to-orange-500" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10"
+        >
           
           {/* Col 1: Brand & Subtitle (5 cols) */}
           <div className="lg:col-span-5 space-y-4">
@@ -56,37 +63,37 @@ export const Footer: React.FC<FooterProps> = ({ lang }) => {
             </h4>
             <ul className="space-y-2 text-xs">
               <li>
-                <a href="#home" className="hover:text-orange-400 transition">
+                <a href="#home" className="hover:text-orange-400 transition-colors inline-block hover:translate-x-1 duration-150">
                   Home (मुख्य पान)
                 </a>
               </li>
               <li>
-                <a href="#products" className="hover:text-orange-400 transition">
+                <a href="#products" className="hover:text-orange-400 transition-colors inline-block hover:translate-x-1 duration-150">
                   Products (प्रॉडक्ट्स)
                 </a>
               </li>
               <li>
-                <a href="#drip-irrigation" className="hover:text-orange-400 transition">
+                <a href="#drip-irrigation" className="hover:text-orange-400 transition-colors inline-block hover:translate-x-1 duration-150">
                   Drip Irrigation (ठिबक सिंचन)
                 </a>
               </li>
               <li>
-                <a href="#calculator" className="hover:text-orange-400 transition">
+                <a href="#calculator" className="hover:text-orange-400 transition-colors inline-block hover:translate-x-1 duration-150">
                   Farm Estimator (कॅल्क्युलेटर)
                 </a>
               </li>
               <li>
-                <a href="#about" className="hover:text-orange-400 transition">
+                <a href="#about" className="hover:text-orange-400 transition-colors inline-block hover:translate-x-1 duration-150">
                   About Us (आमच्याबद्दल)
                 </a>
               </li>
               <li>
-                <a href="#location" className="hover:text-orange-400 transition">
+                <a href="#location" className="hover:text-orange-400 transition-colors inline-block hover:translate-x-1 duration-150">
                   Location (पत्ता व रस्ता)
                 </a>
               </li>
               <li>
-                <a href="#contact" className="hover:text-orange-400 transition">
+                <a href="#contact" className="hover:text-orange-400 transition-colors inline-block hover:translate-x-1 duration-150">
                   Contact & Enquiry (संपर्क)
                 </a>
               </li>
@@ -118,7 +125,9 @@ export const Footer: React.FC<FooterProps> = ({ lang }) => {
               </div>
 
               {/* Direct WhatsApp button in Footer */}
-              <a
+              <motion.a
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
                 href={getWhatsAppLink(defaultMsg)}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -126,7 +135,7 @@ export const Footer: React.FC<FooterProps> = ({ lang }) => {
               >
                 <MessageCircle className="w-3.5 h-3.5" />
                 <span>{lang === 'mr' ? 'WhatsApp वर थेट बोला' : 'Chat on WhatsApp'}</span>
-              </a>
+              </motion.a>
 
               <div className="p-3 rounded-xl bg-[#11161b] border border-gray-800 text-[11px] text-gray-400">
                 ⏰ Open Daily: 7:30 AM – 8:30 PM (सर्व दिवस सुरू)
@@ -134,7 +143,7 @@ export const Footer: React.FC<FooterProps> = ({ lang }) => {
             </div>
           </div>
 
-        </div>
+        </motion.div>
 
         {/* Bottom Bar */}
         <div className="mt-12 pt-6 border-t border-gray-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-400">
@@ -148,10 +157,10 @@ export const Footer: React.FC<FooterProps> = ({ lang }) => {
 
           <button
             onClick={scrollToTop}
-            className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-orange-400 transition cursor-pointer p-1"
+            className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-orange-400 transition cursor-pointer p-1 group"
           >
             <span>Back to Top</span>
-            <ArrowUp className="w-3.5 h-3.5" />
+            <ArrowUp className="w-3.5 h-3.5 group-hover:-translate-y-0.5 transition-transform" />
           </button>
         </div>
 

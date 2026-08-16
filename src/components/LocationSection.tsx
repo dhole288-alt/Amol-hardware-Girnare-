@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { BUSINESS_INFO } from '../data/products';
 import { MapPin, Navigation, Phone, ExternalLink, Clock, Compass, Fuel, CheckCircle, Copy, Check } from 'lucide-react';
+import { motion } from 'motion/react';
 
 interface LocationSectionProps {
   lang: 'mr' | 'en';
@@ -20,7 +21,13 @@ export const LocationSection: React.FC<LocationSectionProps> = ({ lang }) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header in Kesari */}
-        <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.6 }}
+          className="text-center max-w-3xl mx-auto mb-14 space-y-3"
+        >
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-orange-950/80 border border-orange-500/40 text-orange-400 text-xs font-extrabold uppercase tracking-wider">
             <Compass className="w-3.5 h-3.5" />
             <span>{lang === 'mr' ? 'दुकानाचा पत्ता, GPS आणि थेट रस्ता' : 'Store Location & Live Navigation'}</span>
@@ -35,13 +42,19 @@ export const LocationSection: React.FC<LocationSectionProps> = ({ lang }) => {
               ? 'गिरणारे, दुगाव - HP पेट्रोल पंपाच्या अगदी जवळ, मुख्य रस्त्यावर. थेट नेव्हिगेशनसाठी खालील बटणावर क्लिक करा.'
               : 'Conveniently situated on the main route in Girnare, next to the HP Petrol Pump. Click below for live GPS directions.'}
           </p>
-        </div>
+        </motion.div>
 
         {/* Location Layout Box in Kesari Theme */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
           
           {/* Left Info Card */}
-          <div className="lg:col-span-5 bg-[#11161b] border border-gray-800 rounded-3xl p-6 sm:p-8 flex flex-col justify-between space-y-6 shadow-xl">
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-5 bg-[#11161b] border border-gray-800 rounded-3xl p-6 sm:p-8 flex flex-col justify-between space-y-6 shadow-xl"
+          >
             <div className="space-y-5">
               
               {/* Store Title & GPS Badge */}
@@ -89,7 +102,9 @@ export const LocationSection: React.FC<LocationSectionProps> = ({ lang }) => {
                     {BUSINESS_INFO.coordinatesDisplay}
                   </p>
                 </div>
-                <button
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                   type="button"
                   onClick={handleCopyCoordinates}
                   className="px-3 py-1.5 rounded-xl bg-[#182026] hover:bg-[#222c35] border border-gray-700 text-gray-200 text-xs font-bold flex items-center gap-1.5 transition active:scale-95 cursor-pointer"
@@ -106,7 +121,7 @@ export const LocationSection: React.FC<LocationSectionProps> = ({ lang }) => {
                       <span>Copy</span>
                     </>
                   )}
-                </button>
+                </motion.button>
               </div>
 
               {/* Working Hours & Service Areas */}
@@ -126,31 +141,41 @@ export const LocationSection: React.FC<LocationSectionProps> = ({ lang }) => {
             {/* Action Buttons in Kesari */}
             <div className="space-y-3 pt-3 border-t border-gray-800">
               {/* Live Track Navigation Button */}
-              <a
+              <motion.a
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
                 href={BUSINESS_INFO.googleMapsDirectionsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full py-3.5 bg-gradient-to-r from-orange-600 via-amber-600 to-orange-700 hover:from-orange-500 hover:to-amber-500 text-white rounded-xl font-extrabold text-sm flex items-center justify-center gap-2 shadow-lg shadow-orange-950/60 transition transform active:scale-95"
+                className="w-full py-3.5 bg-gradient-to-r from-orange-600 via-amber-600 to-orange-700 hover:from-orange-500 hover:to-amber-500 text-white rounded-xl font-extrabold text-sm flex items-center justify-center gap-2 shadow-lg shadow-orange-950/60 transition"
               >
                 <Navigation className="w-4 h-4 text-white animate-pulse" />
                 <span>{lang === 'mr' ? '📍 Track Now - थेट रस्ता नेव्हिगेट करा' : '📍 Track Now - Start Live Navigation'}</span>
                 <ExternalLink className="w-3.5 h-3.5" />
-              </a>
+              </motion.a>
 
               {/* Direct Call Button */}
-              <a
+              <motion.a
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
                 href={`tel:${BUSINESS_INFO.phoneRaw}`}
                 className="w-full py-2.5 bg-[#182026] hover:bg-[#202932] text-orange-400 hover:text-white border border-orange-500/40 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition"
               >
                 <Phone className="w-4 h-4" />
                 <span>Call {BUSINESS_INFO.phone}</span>
-              </a>
+              </motion.a>
             </div>
 
-          </div>
+          </motion.div>
 
           {/* Right Visual Map Card / Real Embedded Google Map */}
-          <div className="lg:col-span-7 bg-[#11161b] border border-gray-800 rounded-3xl overflow-hidden shadow-xl flex flex-col">
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-7 bg-[#11161b] border border-gray-800 rounded-3xl overflow-hidden shadow-xl flex flex-col"
+          >
             {/* Map Top Header */}
             <div className="bg-[#182026] px-6 py-3.5 border-b border-gray-800 flex items-center justify-between flex-wrap gap-2">
               <div className="flex items-center gap-2 text-xs font-semibold text-gray-300">
@@ -183,7 +208,9 @@ export const LocationSection: React.FC<LocationSectionProps> = ({ lang }) => {
 
               {/* Floating Quick Action Overlay at Bottom of Map */}
               <div className="absolute bottom-3 left-3 right-3 sm:left-4 sm:right-auto z-10">
-                <a
+                <motion.a
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
                   href={BUSINESS_INFO.googleMapsDirectionsUrl}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -192,7 +219,7 @@ export const LocationSection: React.FC<LocationSectionProps> = ({ lang }) => {
                   <Navigation className="w-4 h-4 text-orange-400 animate-bounce" />
                   <span>Start Turn-by-Turn GPS Tracking</span>
                   <ExternalLink className="w-3 h-3 text-gray-400" />
-                </a>
+                </motion.a>
               </div>
             </div>
 
@@ -203,7 +230,7 @@ export const LocationSection: React.FC<LocationSectionProps> = ({ lang }) => {
               <div className="col-span-2 sm:col-span-1">📍 Landmark HP Petrol Pump</div>
             </div>
 
-          </div>
+          </motion.div>
 
         </div>
 

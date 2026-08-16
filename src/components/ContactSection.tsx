@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { BUSINESS_INFO, getWhatsAppLink } from '../data/products';
 import { Phone, MapPin, Send, CheckCircle2, MessageCircle, Clock, Sparkles, Navigation, ExternalLink } from 'lucide-react';
+import { motion } from 'motion/react';
 
 interface ContactSectionProps {
   lang: 'mr' | 'en';
@@ -39,7 +40,13 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Title in Kesari */}
-        <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.6 }}
+          className="text-center max-w-3xl mx-auto mb-16 space-y-3"
+        >
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-orange-950/80 border border-orange-500/40 text-orange-400 text-xs font-extrabold uppercase tracking-wider">
             <MessageCircle className="w-3.5 h-3.5" />
             <span>{lang === 'mr' ? 'थेट चौकशी व संपर्क' : 'Contact & Enquiry'}</span>
@@ -54,16 +61,24 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
               ? 'खालील फॉर्म भरा किंवा थेट फोन अथवा WhatsApp द्वारे संपर्क साधा. आम्ही लगेच उत्तर देऊ.'
               : 'Fill out the form below or connect via direct phone or WhatsApp for quick pricing and availability.'}
           </p>
-        </div>
+        </motion.div>
 
         {/* Contact Form & Direct Contacts Grid in Kesari Theme */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
           
           {/* Left Column: Direct Contact Info */}
-          <div className="lg:col-span-5 space-y-6">
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-5 space-y-6"
+          >
             
             {/* WhatsApp Direct Enquiry Card */}
-            <a
+            <motion.a
+              whileHover={{ scale: 1.02, y: -2 }}
+              whileTap={{ scale: 0.98 }}
               href={getWhatsAppLink("Hello Amol Hardware (Rahul Umap), मला साहित्याचे दर व माहिती हवी आहे.")}
               target="_blank"
               rel="noopener noreferrer"
@@ -86,10 +101,12 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
                   </div>
                 </div>
               </div>
-            </a>
+            </motion.a>
 
             {/* Phone Card */}
-            <a
+            <motion.a
+              whileHover={{ scale: 1.02, y: -2 }}
+              whileTap={{ scale: 0.98 }}
               href={`tel:${BUSINESS_INFO.phoneRaw}`}
               className="block p-6 rounded-2xl bg-[#11161b] border border-gray-800 hover:border-orange-500/60 transition-all duration-200 group shadow-lg"
             >
@@ -109,7 +126,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
                   </div>
                 </div>
               </div>
-            </a>
+            </motion.a>
 
             {/* Address Card */}
             <div className="p-6 rounded-2xl bg-[#11161b] border border-gray-800 space-y-4 shadow-lg">
@@ -137,7 +154,9 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
               </div>
 
               {/* Track Now Button */}
-              <a
+              <motion.a
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
                 href={BUSINESS_INFO.googleMapsDirectionsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -146,7 +165,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
                 <Navigation className="w-4 h-4 text-white animate-pulse" />
                 <span>{lang === 'mr' ? '📍 Track Now - Google Maps वर रस्ता पहा' : '📍 Track Now - Start Navigation'}</span>
                 <ExternalLink className="w-3.5 h-3.5" />
-              </a>
+              </motion.a>
             </div>
 
             {/* Marathi Guidance Promise Card in Kesari */}
@@ -160,10 +179,16 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
               </p>
             </div>
 
-          </div>
+          </motion.div>
 
           {/* Right Column: Interactive Enquiry Form */}
-          <div className="lg:col-span-7 bg-[#11161b] border border-orange-500/30 rounded-3xl p-6 sm:p-10 shadow-2xl">
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-7 bg-[#11161b] border border-orange-500/30 rounded-3xl p-6 sm:p-10 shadow-2xl"
+          >
             
             {submitted ? (
               <div className="text-center py-12 space-y-4">
@@ -277,17 +302,19 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
                 </div>
 
                 {/* Submit Button in WhatsApp Green */}
-                <button
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                   type="submit"
-                  className="w-full py-4 bg-gradient-to-r from-emerald-600 via-green-600 to-emerald-700 hover:from-emerald-500 hover:to-green-500 text-white font-extrabold rounded-xl text-sm sm:text-base flex items-center justify-center gap-2.5 shadow-xl shadow-green-950/60 transition cursor-pointer border border-green-400/40 transform hover:-translate-y-0.5 active:translate-y-0"
+                  className="w-full py-4 bg-gradient-to-r from-emerald-600 via-green-600 to-emerald-700 hover:from-emerald-500 hover:to-green-500 text-white font-extrabold rounded-xl text-sm sm:text-base flex items-center justify-center gap-2.5 shadow-xl shadow-green-950/60 transition cursor-pointer border border-green-400/40"
                 >
                   <MessageCircle className="w-5 h-5 text-white animate-bounce" />
                   <span>{lang === 'mr' ? 'WhatsApp वर चौकशी पाठवा' : 'Send Enquiry via WhatsApp'}</span>
-                </button>
+                </motion.button>
               </form>
             )}
 
-          </div>
+          </motion.div>
 
         </div>
 

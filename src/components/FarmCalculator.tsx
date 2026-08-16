@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Calculator, MessageCircle } from 'lucide-react';
 import { BUSINESS_INFO, getWhatsAppLink } from '../data/products';
+import { motion } from 'motion/react';
 
 interface FarmCalculatorProps {
   lang: 'mr' | 'en';
@@ -61,7 +62,13 @@ export const FarmCalculator: React.FC<FarmCalculatorProps> = ({ lang }) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header in Kesari */}
-        <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.6 }}
+          className="text-center max-w-3xl mx-auto mb-14 space-y-3"
+        >
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-orange-950/80 border border-orange-500/40 text-orange-400 text-xs font-extrabold uppercase tracking-wider">
             <Calculator className="w-3.5 h-3.5" />
             <span>{lang === 'mr' ? 'स्मार्ट कृषी कॅल्क्युलेटर' : 'Smart Farm Calculator'}</span>
@@ -76,10 +83,16 @@ export const FarmCalculator: React.FC<FarmCalculatorProps> = ({ lang }) => {
               ? 'तुमच्या शेताचे क्षेत्रफळ आणि पीक निवडून अंदाजे किती लॅटरल बंडल, पाईप आणि फिल्टर लागेल ते लगेच तपासा.'
               : 'Select your land acreage and crop type to get an instant calculation of drip lateral tubing, sub-main pipes, and filtration units.'}
           </p>
-        </div>
+        </motion.div>
 
         {/* Calculator Main Box in Kesari Theme */}
-        <div className="max-w-4xl mx-auto bg-[#11161b] border border-orange-500/30 rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden">
+        <motion.div
+          initial={{ opacity: 0, y: 25 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.7 }}
+          className="max-w-4xl mx-auto bg-[#11161b] border border-orange-500/30 rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden"
+        >
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
             
             {/* Input Controls (Left Column) */}
@@ -211,13 +224,15 @@ export const FarmCalculator: React.FC<FarmCalculatorProps> = ({ lang }) => {
               </div>
 
               {/* Send Estimate on WhatsApp */}
-              <button
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
                 onClick={handleShareOnWhatsApp}
                 className="w-full py-3.5 bg-gradient-to-r from-emerald-600 via-green-600 to-emerald-700 hover:from-emerald-500 hover:to-green-500 text-white font-extrabold rounded-xl text-sm flex items-center justify-center gap-2.5 shadow-lg shadow-green-950/60 transition cursor-pointer border border-green-400/40"
               >
                 <MessageCircle className="w-4 h-4 text-white" />
                 <span>{lang === 'mr' ? 'हा अंदाज WhatsApp वर पाठवा (Get Quote)' : 'Send Estimate to Amol Hardware'}</span>
-              </button>
+              </motion.button>
 
               <p className="text-[10px] text-gray-400 text-center">
                 * हा अंदाज सर्वसाधारण जमिनीच्या रचनेवर आधारित आहे. अचूक कोटेशनसाठी राहुल सोमनाथ उमाप यांच्याशी संपर्क साधा.
@@ -225,7 +240,7 @@ export const FarmCalculator: React.FC<FarmCalculatorProps> = ({ lang }) => {
             </div>
 
           </div>
-        </div>
+        </motion.div>
 
       </div>
     </section>

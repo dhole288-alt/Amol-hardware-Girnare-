@@ -1,6 +1,7 @@
 import React from 'react';
 import { ASSET_IMAGES, BUSINESS_INFO } from '../data/products';
 import { CheckCircle2, Droplets, Sparkles, ArrowRight, ShieldCheck, Zap, Phone, Sprout } from 'lucide-react';
+import { motion } from 'motion/react';
 
 interface DripIrrigationFeatureProps {
   lang: 'mr' | 'en';
@@ -42,17 +43,23 @@ export const DripIrrigationFeature: React.FC<DripIrrigationFeatureProps> = ({ la
   ];
 
   return (
-    <section id="drip-irrigation" className="py-24 bg-[#080b0e] relative overflow-hidden">
+    <section id="drip-irrigation" className="py-24 bg-[#080c0f] relative overflow-hidden">
       {/* Ambient background Kesari glows */}
-      <div className="absolute top-1/2 left-0 w-96 h-96 bg-orange-600/15 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-amber-600/15 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/2 left-0 w-96 h-96 bg-orange-600/15 rounded-full blur-3xl pointer-events-none animate-ambient-glow" />
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-amber-600/15 rounded-full blur-3xl pointer-events-none animate-ambient-glow" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           
           {/* LEFT: Agricultural Field with Drip Pipes in Kesari Frame */}
-          <div className="lg:col-span-6 relative">
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-6 relative"
+          >
             <div className="relative rounded-3xl overflow-hidden border border-orange-500/40 shadow-2xl shadow-orange-950/60 group">
               <img
                 src={ASSET_IMAGES.dripFieldCropsImg}
@@ -65,7 +72,13 @@ export const DripIrrigationFeature: React.FC<DripIrrigationFeatureProps> = ({ la
               <div className="absolute inset-0 bg-gradient-to-t from-[#080b0e] via-transparent to-black/30" />
 
               {/* Floating Highlight Card 1: Water Conservation in Kesari */}
-              <div className="absolute top-6 left-6 max-w-xs glass-panel p-3.5 rounded-2xl border border-orange-500/50 shadow-xl backdrop-blur-md">
+              <motion.div
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                className="absolute top-6 left-6 max-w-xs glass-panel p-3.5 rounded-2xl border border-orange-500/50 shadow-xl backdrop-blur-md"
+              >
                 <div className="flex items-center gap-2.5">
                   <div className="p-2 rounded-xl bg-orange-500/20 text-orange-400">
                     <Droplets className="w-5 h-5 animate-pulse" />
@@ -75,10 +88,16 @@ export const DripIrrigationFeature: React.FC<DripIrrigationFeatureProps> = ({ la
                     <div className="text-[11px] text-orange-200/90">Up to 60% Water & Fertilizer Efficiency</div>
                   </div>
                 </div>
-              </div>
+              </motion.div>
 
               {/* Floating Highlight Card 2: Maximum Crop Yield in Kesari */}
-              <div className="absolute bottom-6 right-6 max-w-xs glass-panel p-3.5 rounded-2xl border border-orange-500/50 shadow-xl backdrop-blur-md">
+              <motion.div
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                className="absolute bottom-6 right-6 max-w-xs glass-panel p-3.5 rounded-2xl border border-orange-500/50 shadow-xl backdrop-blur-md"
+              >
                 <div className="flex items-center gap-2.5">
                   <div className="p-2 rounded-xl bg-amber-500/20 text-amber-400">
                     <Sprout className="w-5 h-5" />
@@ -88,17 +107,23 @@ export const DripIrrigationFeature: React.FC<DripIrrigationFeatureProps> = ({ la
                     <div className="text-[11px] text-orange-200/90">भरघोस पीक वाढ व उत्कृष्ट उत्पादन</div>
                   </div>
                 </div>
-              </div>
+              </motion.div>
 
               {/* Bottom Tag */}
               <div className="absolute bottom-6 left-6 px-3.5 py-1.5 rounded-xl bg-black/85 border border-orange-500/40 text-xs font-extrabold text-orange-300 backdrop-blur-md">
                 🌾 गिरणारे • दुगाव शेती पट्टा
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* RIGHT: Complete Drip Irrigation Solutions Content */}
-          <div className="lg:col-span-6 space-y-7">
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-6 space-y-7"
+          >
             
             <div className="space-y-3">
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-orange-950/80 border border-orange-500/40 text-orange-400 text-xs font-extrabold uppercase tracking-wider">
@@ -124,9 +149,10 @@ export const DripIrrigationFeature: React.FC<DripIrrigationFeatureProps> = ({ la
               {dripFeatures.map((item, idx) => {
                 const IconComponent = item.icon;
                 return (
-                  <div
+                  <motion.div
                     key={idx}
-                    className="p-3.5 rounded-2xl bg-[#11161b] border border-gray-800 hover:border-orange-500/50 transition-colors flex items-start gap-3 shadow-md"
+                    whileHover={{ y: -3 }}
+                    className="p-3.5 rounded-2xl bg-[#11161b] border border-gray-800 hover:border-orange-500/50 transition-all flex items-start gap-3 shadow-md"
                   >
                     <div className="p-1.5 rounded-xl bg-orange-950/80 text-orange-400 shrink-0 mt-0.5 border border-orange-500/30">
                       <IconComponent className="w-4 h-4" />
@@ -139,31 +165,35 @@ export const DripIrrigationFeature: React.FC<DripIrrigationFeatureProps> = ({ la
                         {item.desc}
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
                 );
               })}
             </div>
 
             {/* Action CTAs with Kesari styling */}
             <div className="flex flex-wrap items-center gap-4 pt-4">
-              <button
+              <motion.button
+                whileHover={{ scale: 1.03, y: -2 }}
+                whileTap={{ scale: 0.97 }}
                 onClick={() => onOpenEnquiry('Complete Drip Irrigation System (संपूर्ण ठिबक सिंचन प्रणाली)')}
-                className="px-7 py-3.5 bg-gradient-to-r from-orange-600 via-amber-600 to-orange-700 hover:from-orange-500 hover:to-amber-500 text-white rounded-xl font-extrabold text-sm sm:text-base flex items-center gap-2.5 shadow-xl shadow-orange-950/60 hover:shadow-orange-600/40 transition transform hover:-translate-y-0.5 cursor-pointer"
+                className="px-7 py-3.5 bg-gradient-to-r from-orange-600 via-amber-600 to-orange-700 hover:from-orange-500 hover:to-amber-500 text-white rounded-xl font-extrabold text-sm sm:text-base flex items-center gap-2.5 shadow-xl shadow-orange-950/60 hover:shadow-orange-600/40 transition-all cursor-pointer"
               >
                 <span>{lang === 'mr' ? 'ठिबक सिंचन चौकशी करा' : 'Enquire Now'}</span>
                 <ArrowRight className="w-4 h-4" />
-              </button>
+              </motion.button>
 
-              <a
+              <motion.a
+                whileHover={{ scale: 1.03, y: -2 }}
+                whileTap={{ scale: 0.97 }}
                 href={`tel:${BUSINESS_INFO.phoneRaw}`}
-                className="px-6 py-3.5 bg-[#161c22] hover:bg-orange-950/80 text-orange-300 hover:text-white border border-orange-500/40 rounded-xl font-bold text-sm sm:text-base flex items-center gap-2 transition"
+                className="px-6 py-3.5 bg-[#161c22] hover:bg-orange-950/80 text-orange-300 hover:text-white border border-orange-500/40 rounded-xl font-bold text-sm sm:text-base flex items-center gap-2 transition-all"
               >
                 <Phone className="w-4 h-4 text-orange-400" />
                 <span>Call {BUSINESS_INFO.phone}</span>
-              </a>
+              </motion.a>
             </div>
 
-          </div>
+          </motion.div>
 
         </div>
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import { WHY_CHOOSE_US, BUSINESS_INFO } from '../data/products';
 import { Boxes, ShieldCheck, MapPin, UserCheck, Award, HeartHandshake, PhoneCall } from 'lucide-react';
+import { motion } from 'motion/react';
 
 interface WhyChooseUsProps {
   lang: 'mr' | 'en';
@@ -19,7 +20,13 @@ export const WhyChooseUs: React.FC<WhyChooseUsProps> = ({ lang }) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header in Kesari */}
-        <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.6 }}
+          className="text-center max-w-3xl mx-auto mb-16 space-y-3"
+        >
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-orange-950/80 border border-orange-500/40 text-orange-400 text-xs font-extrabold uppercase tracking-wider">
             <Award className="w-3.5 h-3.5" />
             <span>{lang === 'mr' ? 'विश्वास व गुणवत्ता' : 'Our Commitment'}</span>
@@ -34,16 +41,21 @@ export const WhyChooseUs: React.FC<WhyChooseUsProps> = ({ lang }) => {
               ? 'स्थानिक शेतकरी, प्लंबर आणि बांधकाम व्यावसायिकांसाठी हक्काचे आणि खात्रीशीर विश्वासाचे नाव.'
               : 'Delivering unmatched product quality, transparent pricing, and technical advice tailored to Maharashtra farming conditions.'}
           </p>
-        </div>
+        </motion.div>
 
         {/* 4 Feature Cards Grid in Kesari Theme */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {WHY_CHOOSE_US.map((item, idx) => {
             const Icon = ICONS_MAP[item.icon] || Boxes;
             return (
-              <div
+              <motion.div
                 key={idx}
-                className="glass-panel p-6 sm:p-7 rounded-2xl border border-gray-800 hover:border-orange-500/60 transition-all duration-300 flex flex-col justify-between group hover:-translate-y-1.5 shadow-xl hover:shadow-orange-950/40"
+                initial={{ opacity: 0, y: 25 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-40px' }}
+                transition={{ duration: 0.5, delay: idx * 0.1 }}
+                whileHover={{ y: -6, transition: { duration: 0.2 } }}
+                className="glass-panel p-6 sm:p-7 rounded-2xl border border-gray-800 hover:border-orange-500/60 transition-all duration-300 flex flex-col justify-between group shadow-xl hover:shadow-orange-950/40"
               >
                 <div className="space-y-4">
                   <div className="w-12 h-12 rounded-xl bg-orange-950/80 border border-orange-500/40 text-orange-400 flex items-center justify-center group-hover:scale-110 transition-transform">
@@ -67,13 +79,19 @@ export const WhyChooseUs: React.FC<WhyChooseUsProps> = ({ lang }) => {
                   <span className="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
                   <span>Amol Hardware Standard</span>
                 </div>
-              </div>
+              </motion.div>
             );
           })}
         </div>
 
         {/* Local Community Trust Strip in Kesari */}
-        <div className="mt-14 p-6 rounded-2xl bg-[#11161b] border border-orange-500/30 flex flex-wrap items-center justify-between gap-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-40px' }}
+          transition={{ duration: 0.6 }}
+          className="mt-14 p-6 rounded-2xl bg-[#11161b] border border-orange-500/30 flex flex-wrap items-center justify-between gap-4"
+        >
           <div className="flex items-center gap-3">
             <div className="p-3 rounded-xl bg-orange-950 text-orange-400 border border-orange-500/40">
               <HeartHandshake className="w-6 h-6" />
@@ -88,14 +106,16 @@ export const WhyChooseUs: React.FC<WhyChooseUsProps> = ({ lang }) => {
             </div>
           </div>
 
-          <a
+          <motion.a
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
             href={`tel:${BUSINESS_INFO.phoneRaw}`}
-            className="px-4 py-2 rounded-xl bg-orange-600/20 text-orange-300 border border-orange-500/40 hover:bg-orange-600 hover:text-white transition text-xs font-bold flex items-center gap-2"
+            className="px-4 py-2 rounded-xl bg-orange-600/20 text-orange-300 border border-orange-500/40 hover:bg-orange-600 hover:text-white transition-all text-xs font-bold flex items-center gap-2"
           >
             <PhoneCall className="w-3.5 h-3.5" />
             <span>{BUSINESS_INFO.phone}</span>
-          </a>
-        </div>
+          </motion.a>
+        </motion.div>
 
       </div>
     </section>

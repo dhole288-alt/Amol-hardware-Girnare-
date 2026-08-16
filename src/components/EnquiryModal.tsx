@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { X, Send, CheckCircle2, Sparkles, MessageCircle } from 'lucide-react';
 import { BUSINESS_INFO, getWhatsAppLink } from '../data/products';
+import { motion, AnimatePresence } from 'motion/react';
 
 interface EnquiryModalProps {
   isOpen: boolean;
@@ -28,8 +29,6 @@ export const EnquiryModal: React.FC<EnquiryModalProps> = ({
     }
   }, [initialProduct]);
 
-  if (!isOpen) return null;
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!name || !phone) return;
@@ -51,129 +50,152 @@ export const EnquiryModal: React.FC<EnquiryModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fade-in">
-      <div
-        className="relative w-full max-w-lg bg-[#11161b] border border-orange-500/30 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-5"
-        onClick={(e) => e.stopPropagation()}
-      >
-        {/* Close Button */}
-        <button
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.2 }}
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md"
           onClick={onClose}
-          className="absolute top-5 right-5 p-2 rounded-full bg-[#182026] text-gray-400 hover:text-white transition"
-          aria-label="Close modal"
         >
-          <X className="w-5 h-5" />
-        </button>
+          <motion.div
+            initial={{ scale: 0.92, opacity: 0, y: 20 }}
+            animate={{ scale: 1, opacity: 1, y: 0 }}
+            exit={{ scale: 0.95, opacity: 0, y: 10 }}
+            transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+            className="relative w-full max-w-lg bg-[#11161b] border border-orange-500/30 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-5"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close Button */}
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              onClick={onClose}
+              className="absolute top-5 right-5 p-2 rounded-full bg-[#182026] text-gray-400 hover:text-white transition cursor-pointer"
+              aria-label="Close modal"
+            >
+              <X className="w-5 h-5" />
+            </motion.button>
 
-        {sent ? (
-          <div className="text-center py-8 space-y-3">
-            <div className="w-14 h-14 rounded-full bg-orange-950 border border-orange-500 text-orange-400 flex items-center justify-center mx-auto shadow-lg">
-              <CheckCircle2 className="w-7 h-7" />
-            </div>
-            <h3 className="text-xl font-bold text-white font-heading">
-              {lang === 'mr' ? 'चौकशी पाठवली आहे!' : 'Enquiry Sent!'}
-            </h3>
-            <p className="text-xs text-gray-300">
-              Opening WhatsApp chat with Amol Hardware...
-            </p>
-          </div>
-        ) : (
-          <>
-            {/* Modal Header */}
-            <div className="space-y-1">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-orange-950/80 border border-orange-500/30 text-orange-400 text-[11px] font-extrabold">
-                <Sparkles className="w-3 h-3" />
-                <span>Fast Enquiry</span>
-              </div>
-              <h3 className="text-xl sm:text-2xl font-bold text-white font-heading">
-                {lang === 'mr' ? 'उत्पादन चौकशी व दरपत्रक' : 'Product & Pricing Enquiry'}
-              </h3>
-              <p className="text-xs text-gray-400">
-                Amol Hardware • Rahul Somnath Umap (Girnare, Dugaon)
-              </p>
-            </div>
+            {sent ? (
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                className="text-center py-8 space-y-3"
+              >
+                <div className="w-14 h-14 rounded-full bg-orange-950 border border-orange-500 text-orange-400 flex items-center justify-center mx-auto shadow-lg">
+                  <CheckCircle2 className="w-7 h-7" />
+                </div>
+                <h3 className="text-xl font-bold text-white font-heading">
+                  {lang === 'mr' ? 'चौकशी पाठवली आहे!' : 'Enquiry Sent!'}
+                </h3>
+                <p className="text-xs text-gray-300">
+                  Opening WhatsApp chat with Amol Hardware...
+                </p>
+              </motion.div>
+            ) : (
+              <>
+                {/* Modal Header */}
+                <div className="space-y-1">
+                  <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-orange-950/80 border border-orange-500/30 text-orange-400 text-[11px] font-extrabold">
+                    <Sparkles className="w-3 h-3" />
+                    <span>Fast Enquiry</span>
+                  </div>
+                  <h3 className="text-xl sm:text-2xl font-bold text-white font-heading">
+                    {lang === 'mr' ? 'उत्पादन चौकशी व दरपत्रक' : 'Product & Pricing Enquiry'}
+                  </h3>
+                  <p className="text-xs text-gray-400">
+                    Amol Hardware • Rahul Somnath Umap (Girnare, Dugaon)
+                  </p>
+                </div>
 
-            {/* Form */}
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <label className="block text-xs font-bold text-orange-300 uppercase mb-1.5">
-                  {lang === 'mr' ? 'तुमचे नाव (Your Name)*' : 'Your Name*'}
-                </label>
-                <input
-                  type="text"
-                  required
-                  placeholder="e.g. Rahul Patil"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-[#182026] border border-gray-700 text-white text-xs sm:text-sm focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
-                />
-              </div>
+                {/* Form */}
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div>
+                    <label className="block text-xs font-bold text-orange-300 uppercase mb-1.5">
+                      {lang === 'mr' ? 'तुमचे नाव (Your Name)*' : 'Your Name*'}
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="e.g. Rahul Patil"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-[#182026] border border-gray-700 text-white text-xs sm:text-sm focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
+                    />
+                  </div>
 
-              <div>
-                <label className="block text-xs font-bold text-orange-300 uppercase mb-1.5">
-                  {lang === 'mr' ? 'मोबाईल नंबर (Mobile Number)*' : 'Mobile Number*'}
-                </label>
-                <input
-                  type="tel"
-                  required
-                  placeholder="e.g. 86056 26993"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-[#182026] border border-gray-700 text-white text-xs sm:text-sm focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
-                />
-              </div>
+                  <div>
+                    <label className="block text-xs font-bold text-orange-300 uppercase mb-1.5">
+                      {lang === 'mr' ? 'मोबाईल नंबर (Mobile Number)*' : 'Mobile Number*'}
+                    </label>
+                    <input
+                      type="tel"
+                      required
+                      placeholder="e.g. 86056 26993"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-[#182026] border border-gray-700 text-white text-xs sm:text-sm focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
+                    />
+                  </div>
 
-              <div>
-                <label className="block text-xs font-bold text-orange-300 uppercase mb-1.5">
-                  {lang === 'mr' ? 'निवडलेले उत्पादन (Product)' : 'Selected Product'}
-                </label>
-                <input
-                  type="text"
-                  value={product}
-                  onChange={(e) => setProduct(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-[#182026] border border-gray-700 text-orange-300 font-semibold text-xs sm:text-sm focus:outline-none focus:border-orange-500"
-                />
-              </div>
+                  <div>
+                    <label className="block text-xs font-bold text-orange-300 uppercase mb-1.5">
+                      {lang === 'mr' ? 'निवडलेले उत्पादन (Product)' : 'Selected Product'}
+                    </label>
+                    <input
+                      type="text"
+                      value={product}
+                      onChange={(e) => setProduct(e.target.value)}
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-[#182026] border border-gray-700 text-orange-300 font-semibold text-xs sm:text-sm focus:outline-none focus:border-orange-500"
+                    />
+                  </div>
 
-              <div>
-                <label className="block text-xs font-bold text-orange-300 uppercase mb-1.5">
-                  {lang === 'mr' ? 'गाव / परिसर (Village / Location)' : 'Village / Location'}
-                </label>
-                <input
-                  type="text"
-                  placeholder="e.g. Girnare, Dugaon, Nashik"
-                  value={village}
-                  onChange={(e) => setVillage(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-[#182026] border border-gray-700 text-white text-xs sm:text-sm focus:outline-none focus:border-orange-500"
-                />
-              </div>
+                  <div>
+                    <label className="block text-xs font-bold text-orange-300 uppercase mb-1.5">
+                      {lang === 'mr' ? 'गाव / परिसर (Village / Location)' : 'Village / Location'}
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="e.g. Girnare, Dugaon, Nashik"
+                      value={village}
+                      onChange={(e) => setVillage(e.target.value)}
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-[#182026] border border-gray-700 text-white text-xs sm:text-sm focus:outline-none focus:border-orange-500"
+                    />
+                  </div>
 
-              <div>
-                <label className="block text-xs font-bold text-orange-300 uppercase mb-1.5">
-                  {lang === 'mr' ? 'तपशील किंवा प्रश्न (Note/Quantity)' : 'Note / Quantity required'}
-                </label>
-                <textarea
-                  rows={2}
-                  placeholder="e.g. 2 bundles required, need price quote with delivery..."
-                  value={note}
-                  onChange={(e) => setNote(e.target.value)}
-                  className="w-full px-3.5 py-2 rounded-xl bg-[#182026] border border-gray-700 text-white text-xs sm:text-sm focus:outline-none focus:border-orange-500"
-                />
-              </div>
+                  <div>
+                    <label className="block text-xs font-bold text-orange-300 uppercase mb-1.5">
+                      {lang === 'mr' ? 'तपशील किंवा प्रश्न (Note/Quantity)' : 'Note / Quantity required'}
+                    </label>
+                    <textarea
+                      rows={2}
+                      placeholder="e.g. 2 bundles required, need price quote with delivery..."
+                      value={note}
+                      onChange={(e) => setNote(e.target.value)}
+                      className="w-full px-3.5 py-2 rounded-xl bg-[#182026] border border-gray-700 text-white text-xs sm:text-sm focus:outline-none focus:border-orange-500"
+                    />
+                  </div>
 
-              <div className="pt-2">
-                <button
-                  type="submit"
-                  className="w-full py-3.5 bg-gradient-to-r from-emerald-600 via-green-600 to-emerald-700 hover:from-emerald-500 hover:to-green-500 text-white font-extrabold rounded-xl text-sm flex items-center justify-center gap-2 shadow-lg shadow-green-950/60 cursor-pointer border border-green-400/40 transform active:scale-95"
-                >
-                  <MessageCircle className="w-5 h-5 text-white" />
-                  <span>{lang === 'mr' ? 'WhatsApp वर चौकशी पाठवा' : 'Send Enquiry via WhatsApp'}</span>
-                </button>
-              </div>
-            </form>
-          </>
-        )}
-      </div>
-    </div>
+                  <div className="pt-2">
+                    <motion.button
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      type="submit"
+                      className="w-full py-3.5 bg-gradient-to-r from-emerald-600 via-green-600 to-emerald-700 hover:from-emerald-500 hover:to-green-500 text-white font-extrabold rounded-xl text-sm flex items-center justify-center gap-2 shadow-lg shadow-green-950/60 cursor-pointer border border-green-400/40"
+                    >
+                      <MessageCircle className="w-5 h-5 text-white" />
+                      <span>{lang === 'mr' ? 'WhatsApp वर चौकशी पाठवा' : 'Send Enquiry via WhatsApp'}</span>
+                    </motion.button>
+                  </div>
+                </form>
+              </>
+            )}
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 };
